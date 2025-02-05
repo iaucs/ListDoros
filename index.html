@@ -8,65 +8,139 @@
     <meta name="author" content="Goudarz Jafari">
     <meta content="لیست دروس منتشر شده برای انتخاب واحد دانشگاه آزاد شیراز">
     <link rel="stylesheet" href="index.css"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
     <link rel="apple-touch-icon" sizes="180x180" href="images//apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     <link rel="manifest" href="images/site.webmanifest">
 </head>
 <body>
-    <div class="container-fluid">
-        <main class="row">
-            <div class="col">
-                <section>
-                    <h1>لیست دروس انتخاب واحد</h1>
-                    <p>دروس ارائه شده ترم بهمن ۱۴۰۳ </p>
-                    <p> لیست دروس تخصصی و عمومی، کارشناسی ارشد (پیوسته - ناپیوسته) ، کارشناسی (پیوسته - ناپیوسته)، کاردانی (پیوسته - ناپیوسته)</p>
-                    <p> اولویت دیدن دروس در خود آموزشیار می‌باشد، این فایل فقط جنبه کمک در زمانی که دسترسی به آموزشیار راحت نباشد را دارد. (
-                        <b>
-                        تا ساعت ۲۳:۰۰ - ۵ بهمن ۱۴۰۳ لیست به روز شده
-                        </b>
-                        )
-                    </p>
-                </section>
-                <section id="table-container" class="table-responsive"></section>
-        </main>
-        <footer class="row">
-            <div class="col">
-                <hr>
-                <p class="text-right">پیاده‌سازی شده توسط 
-                    <a href="https://twitter.com/GoudarzJafari">گودرز جعفری</a></p>
+    <body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col">
+        <header class="bg-blue-800 text-white py-4 shadow-md">
+          <div
+            class="container mx-auto flex flex-wrap items-center justify-between px-4"
+          >
+            <div class="flex items-center space-x-4 mb-2 sm:mb-0">
+              <img src="./images/iau-shiraz.svg" alt="Logo" class="w-12 p-1" />
+              <h1 class="text-lg font-bold">
+                انجمن علمی کامپیوتر و هوش مصنوعی دانشگاه آزاد اسلامی واحد شیراز
+              </h1>
             </div>
+          </div>
+        </header>
+    
+        <main class="container mx-auto px-4 py-8 flex-grow">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold">لیست دروس ارائه شده ترم بهمن ۱۴۰۳</h2>
+            <br />
+            <hr />
+            <br />
+            <span>آپدیت شده تا ۵ بهمن ۱۴۰۳ ساعت ۲۳:۰۰</span>
+            <br />
+            <span class="text-sm" style="direction: rtl;"
+              >اولویت دیدن دروس در خود آموزشیار می‌باشد، این صفحه فقط جنبه کمک در
+              زمانی که دسترسی به آموزشیار راحت نباشد را دارد.</span
+            >
+          </div>
+    
+          <div
+            class="flex flex-wrap items-center justify-between mb-6 space-y-4 sm:space-y-0"
+          >
+            <div
+              class="flex flex-wrap w-full sm:w-auto items-center space-y-4 sm:space-y-0 sm:space-x-2 sm:space-x-reverse"
+            >
+              <input
+                type="text"
+                id="searchInputCode"
+                placeholder="جستجو"
+                class="border border-gray-700 rounded-lg py-2 px-4 w-full sm:w-64 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all"
+              />
+              <a
+                href="https://chart.shirazidev.ir/ghadim.html"
+                class="bg-blue-700 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-800 hover:shadow-lg transition-all w-full sm:w-auto text-center"
+                title="کد درس جدید"
+              >
+                کد درس قبل از 1403
+              </a>
+              <a
+                href="https://chart.shirazidev.ir/jadid.html"
+                class="bg-blue-700 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-800 hover:shadow-lg transition-all w-full sm:w-auto text-center"
+                title="کد درس جدید"
+              >
+                کد درس 1403 به بعد
+              </a>
+              <a
+                href="./data/4032.json"
+                download
+                class="bg-green-700 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-800 hover:shadow-lg transition-all w-full sm:w-auto text-center"
+                title="دانلود آخرین تغییرات"
+              >
+                دانلود آخرین تغییرات
+              </a>
+            </div>
+          </div>
+          <div class="mt-4 bg-blue-700 text-white rounded" id="resultSummary"></div>
+          <div
+            class="table-wrapper overflow-x-auto overflow-y-auto max-h-screen"
+            style="max-height: 500px"
+          >
+            <table
+              class="min-w-full border-collapse border border-gray-700 shadow-sm rounded-lg"
+            >
+              <thead class="bg-blue-900 sticky top-0 z-10">
+                <tr id="tableHeaders"></tr>
+              </thead>
+              <tbody id="courseTable">
+                <tr>
+                  <td colspan="15" class="text-center text-gray-500">
+                    در حال بارگذاری...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+          <div class="flex justify-center mt-6 space-x-2" id="paginationControls">
+            <button
+              id="prevButton"
+              class="px-4 py-2 bg-blue-600 text-white rounded"
+            >
+              صفحه قبل
+            </button>
+            <span
+              id="pageInfo"
+              class="px-4 py-2 bg-blue-600 text-white rounded"
+            ></span>
+            <button
+              id="nextButton"
+              class="px-4 py-2 bg-blue-600 text-white rounded"
+            >
+              صفحه بعد
+            </button>
+          </div>
+        </main>
+    
+        <footer class="bg-gray-800 text-gray-300 py-4 w-full">
+          <div class="container mx-auto px-4 text-center">
+            <span>توسعه داده شده توسط </span>
+            <a
+              href="https://shziaucesa.t.me"
+              target="_blank"
+              class="text-blue-500 hover:text-blue-400 transition-all"
+            >
+              انجمن علمی کامپیوتر
+            </a>
+            <span>(امیرحسین شیرازی ، گودرز جعفری و سیروس صالحی)</span>
+          </div>
         </footer>
-    </div>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery.csv.min.js"></script>
-    <script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/dataTables.bootstrap4.min.js"></script>
-    <script src="js/csv_to_html_table.js"></script>
-    <script>
-        function format_link(link) {
-            if (link)
-                return "<a href='" + link + "' target='_blank'>" + link + "</a>";
-            else return "";
-        }
-        CsvToHtmlTable.init({
-            csv_path: "data/4032.csv",
-            element: "table-container",
-            allow_download: true,
-            csv_options: {
-                separator: ",",
-                delimiter: '"'
-            },
-            datatables_options: {
-                paging: false
-            },
-            custom_formatting: [
-                [4, format_link]
-            ]
-        });
-    </script>
-</body>
+    
+        <script src="./js/scripts.js"></script>
+      </body>
+
 </html>
